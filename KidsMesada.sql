@@ -51,5 +51,47 @@ ALTER TABLE [filhos]
 
 go
 
+SELECT PAIS.*, FILHOS.* FROM PAIS
+INNER JOIN filhos
+ON IDPAIS = ID_PAIS
+GO
 
+SELECT * FROM PAIS
+GO
 
+/* TESTANDO - UNIQUE  DA TABELA PAIS */
+INSERT INTO PAIS VALUES(NEWID(), 'RAUL', 'marcelinops@gmail.com', 'sila', '84372957')
+/*Violação da restrição UNIQUE KEY 'uc_pais_celular'. Não é possível inserir a chave duplicada no objeto 'dbo.pais'.
+ O valor de chave duplicada é (84372957).*/
+INSERT INTO PAIS VALUES(NEWID(), 'RAUL', 'raul@gmail.com', 'sila', '84372957')
+/*Violação da restrição UNIQUE KEY 'uc_pais_celular'. Não é possível inserir a chave duplicada no objeto 'dbo.pais'.
+ O valor de chave duplicada é (84372957).*/
+INSERT INTO PAIS VALUES(NEWID(), 'RAUL', 'marcelino@gmail.com', 'sila', '87172957')
+/*Violação da restrição UNIQUE KEY 'uc_pais_email'. Não é possível inserir a chave duplicada no objeto 'dbo.pais'.
+ O valor de chave duplicada é (marcelino@gmail.com).*/
+ go
+
+ /*delete from [pais]
+ select * from [pais]
+ go*/
+
+ /* procedure de insert tabelas pais e filhos */
+SELECT PAIS.*, FILHOS.* FROM PAIS
+INNER JOIN filhos
+ON IDPAIS = ID_PAIS
+GO
+
+create procedure [cadastro_pais] --@id uniqueidentifier, 
+								 @nome varchar(120),
+								 @email NVARCHAR(180),
+								 @senha NVARCHAR(40),
+								 @celular NVARCHAR(30)
+as
+	insert into [pais] values(newid(), @nome, @email, @senha, @celular)
+	
+go
+
+[cadastro_pais] 'marcelino', 'marcelinops@gmail', 'senha', '997522014'
+go
+
+select * from [pais] 
