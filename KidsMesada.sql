@@ -50,7 +50,11 @@ ALTER TABLE [filhos]
  ADD CONSTRAINT [uc_filhos_userName] UNIQUE ([userName])
 
 go
-
+/*
+alter table [filhos]
+alter column [total_pontos]int not null
+go
+*/
 SELECT PAIS.*, FILHOS.* FROM PAIS
 INNER JOIN filhos
 ON IDPAIS = ID_PAIS
@@ -186,7 +190,6 @@ go
 /* testes */
 select * from pontuacao
 select * from acoes
-
 select * from filhos
 
 
@@ -196,3 +199,88 @@ insert into [pontuacao]([idPontuacao], [pontos], [id_acoes], [id_parents], [id_f
 insert into [pontuacao] values(
 newid(), '01/12/2024 13:00', -2, '89C4E509-9291-401E-94D3-84CFADAA65A2', 'B566C3BA-ACE3-4DC0-896C-D4D05ABE6F22',
   '1FE9501E-8670-4051-A1BD-FABF45D6D484')
+
+/* fazendo a trigger de atualização de pontos e valor dinheiro */
+
+alter TRIGGER [tr_atualiza_pontos_saldo]
+ON [pontuacao]
+FOR INSERT, UPDATE
+AS
+
+BEGIN
+	UPDATE f
+	SET f.[total_pontos] = f.[total_pontos] + (ISNULL(i.[pontos], 0) - ISNULL(d.[pontos], 0))
+	FROM [filhos] f
+	INNER JOIN [inserted] i ON f.[idFilhos] = i.[id_filhos]
+	FULL OUTER JOIN [deleted] d ON f.[idFilhos] = d.[id_filhos]
+
+		
+END
+GO
+
+insert into [pontuacao] values(
+newid(), getdate(), -10, '89C4E509-9291-401E-94D3-84CFADAA65A2', 'B566C3BA-ACE3-4DC0-896C-D4D05ABE6F22',
+  '1FE9501E-8670-4051-A1BD-FABF45D6D484')
+insert into [pontuacao] values(
+newid(), getdate(), 50, '89C4E509-9291-401E-94D3-84CFADAA65A2', 'B566C3BA-ACE3-4DC0-896C-D4D05ABE6F22',
+  '06142772-4984-411E-B440-BBD592EEB885')
+
+-- delete from [pontuacao] where [idPontuacao] = '94640B6B-AD66-4065-9BE6-E7AD3722D5A2'
+
+
+update pontuacao set pontos = 75 where idPontuacao = '6885B400-9876-447D-A334-FFBF42A00082'
+update pontuacao set pontos = -40 where idPontuacao = '3E314D7D-B55E-4596-9A35-EADE8DCF3906'
+select * from pontuacao
+select * from acoes
+select * from filhos
+go
+
+
+alter trigger [tr_atualiza_pontos_delete]
+ON [pontuacao]
+FOR DELETE
+AS
+BEGIN
+	DECLARE
+		@pontos_deletado int
+		
+		BEGIN
+		SET @pontos_deletado = (select ISNULL(SUM([pontos]), 0) FROM [deleted])
+
+
+		UPDATE [filhos]
+		SET [total_pontos] = [total_pontos] - @pontos_deletado
+		WHERE [idFilhos] = (select id_filhos FROM deleted)
+		END
+	
+			
+END
+GO
+
+ALTER trigger [tr_atualiza_saldo]
+ON [filhos]
+FOR UPDATE, INSERT
+AS
+BEGIN
+	
+	update [filhos]
+	set [saldo_dinheiro] = (select [total_pontos] from inserted) * 0.1
+	where [idFilhos] = (select [idfilhos] from inserted)
+END
+GO
+
+delete from [pontuacao] where [idPontuacao] = '31D45802-AF73-4D82-BB7A-DFBF0DB38447'
+
+
+update pontuacao set pontos = 75 where idPontuacao = '0D3DCDA2-9402-418A-B840-4810CA3B6B3A'
+update pontuacao set pontos = -40 where idPontuacao = 'D56F23F2-7CA2-4F69-BF48-53AD47B93FD2'
+select * from pontuacao
+select * from acoes
+select * from filhos
+go
+
+
+
+
+
+
