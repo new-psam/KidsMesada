@@ -1,16 +1,82 @@
 ﻿using Microsoft.Data.SqlClient;
+using Dapper;
+using KMesada.Screens.PaisScreens;
 
 
 namespace KMesada;
 
 class Program
 {
+    private const string CONNECTION_STRING = @"Server=localhost, 1433; Database=Kidsmesada; User Id=sa; Password=1q2w3e4r@#$;
+       Encrypt=True;TrustServerCertificate=True;";
     static void Main(string[] args)
     {
-       const string connectionString = @"Server=localhost, 1433; Database=Kidsmesada; User Id=sa; Password=1q2w3e4r@#$;
-       Encrypt=True;TrustServerCertificate=True;";
+       DataBase.Connection = new SqlConnection(CONNECTION_STRING);
+       DataBase.Connection.Open();
 
+       Load();
+       Console.ReadKey();
+       DataBase.Connection.Close();
+       Environment.Exit(0);
+       
+    }
 
+    public static void Load()
+    {
+        Console.Clear();
+        Console.WriteLine("");
+        Console.WriteLine("Controle de Pontos Crianças");
+        Console.WriteLine("----------------------");
+        Console.WriteLine("Menu Principal");
+        Console.WriteLine("");
+        Console.WriteLine("1 - Config Pais");
+        Console.WriteLine("2 - Config Filhos");
+        Console.WriteLine("3 - Config Comportamento (Ações) Filhos");
+        Console.WriteLine("4 - Controle Pontos");
+        Console.WriteLine("5 - Relatórios");
+        Console.WriteLine("6 - Atalho");
+        //Console.WriteLine("7 - Vincular post/tag");
+        //Console.WriteLine("8 - Relatórios");
+        Console.WriteLine("0 - Sair");
+        Console.WriteLine("");
+        Console.WriteLine("");
+
+        var option = Tratamentos.EntradaInt();
+
+        switch (option)
+        {
+            case 1:
+                MenuPaisScreens.Load();
+                break;
+            case 2:
+                Console.WriteLine("opção 2");Console.ReadKey(); Load();
+                break;
+            case 3:
+                Console.WriteLine("opção 3");Console.ReadKey(); Load();
+                break;
+            case 4:
+                Console.WriteLine("opção 4");Console.ReadKey(); Load();
+                break;
+            case 5:
+                Console.WriteLine("opção 5");Console.ReadKey(); Load();
+                break;
+            case 6:
+                Console.WriteLine("opção 6");Console.ReadKey(); Load();
+                break;
+            
+            case 0:
+                Console.WriteLine("Aperte qualquer tecla para sair do Programa...");
+
+                break;
+            default:
+                Console.WriteLine("Alternativa incorreta!!!\nDigite alternativa válida...");
+                Console.ReadKey(); Load(); break;
+        }
+        
+    }
+}
+
+/*
        using (var connection = new SqlConnection(connectionString))
        {
             Console.WriteLine("Conectado!");
@@ -28,12 +94,4 @@ class Program
                     Console.WriteLine($"{reader.GetInt32(0)} - {reader.GetString(1)}");
                 }
             }
-       }
-       //connection.Open();
-
-
-       //connection.Close();
-
-       Console.WriteLine("Hello, World!");
-    }
-}
+       }*/

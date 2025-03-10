@@ -63,3 +63,5 @@
 /Users/marcelinosantos/dev1/KidsMesada/KidsMesada/KMesada/bin/Debug/net9.0/runtimes/win/lib/net9.0/System.Diagnostics.EventLog.Messages.dll
 /Users/marcelinosantos/dev1/KidsMesada/KidsMesada/KMesada/bin/Debug/net9.0/runtimes/win/lib/net9.0/System.Diagnostics.EventLog.dll
 /Users/marcelinosantos/dev1/KidsMesada/KidsMesada/KMesada/bin/Debug/net9.0/runtimes/win/lib/net9.0/System.Security.Cryptography.Pkcs.dll
+/Users/marcelinosantos/dev1/KidsMesada/KidsMesada/KMesada/bin/Debug/net9.0/Dapper.dll
+/Users/marcelinosantos/dev1/KidsMesada/KidsMesada/KMesada/bin/Debug/net9.0/Dapper.Contrib.dll
