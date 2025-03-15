@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Dapper;
 using KMesada.Screens.PaisScreens;
+using KMesada.Screens;
+using KMesada.Screens.FilhosScreens;
 
 
 namespace KMesada;
@@ -49,10 +51,10 @@ class Program
                 MenuPaisScreens.Load();
                 break;
             case 2:
-                Console.WriteLine("opção 2");Console.ReadKey(); Load();
+                MenuFilhosScreen.Load();
                 break;
             case 3:
-                Console.WriteLine("opção 3");Console.ReadKey(); Load();
+                MenuAcoesScreen.Load();
                 break;
             case 4:
                 Console.WriteLine("opção 4");Console.ReadKey(); Load();

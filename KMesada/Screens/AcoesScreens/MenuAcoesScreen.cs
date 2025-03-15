@@ -1,19 +1,23 @@
-namespace KMesada.Screens.PaisScreens;
+using KMesada.Screens.AcoesScreens;
 
-public class MenuPaisScreens
+
+namespace KMesada.Screens;
+
+
+public class MenuAcoesScreen
 {
     public static void Load()
     {
         Console.Clear();
-        Console.WriteLine("Configurações Pais");
+        Console.WriteLine("Configurações Açoes do Filhos");
         Console.WriteLine("--------------");
         Console.WriteLine("O que deseja fazer?");
         Console.WriteLine();
-        Console.WriteLine("1 - Listar Pais");
-        Console.WriteLine("2 - Cadastrar Pai ou Mãe");
-        Console.WriteLine("3 - Editar Informações Pais");
-        Console.WriteLine("4 - Excluir Pais");
-        Console.WriteLine("5 - Vincular Filhos a Pais");
+        Console.WriteLine("1 - Listar Ações");
+        Console.WriteLine("2 - Cadastrar Ações");
+        Console.WriteLine("3 - Editar Ações");
+        Console.WriteLine("4 - Excluir Ações");
+        //Console.WriteLine("5 - Vincular Filhos a Pais");
         //Console.WriteLine("6 - Desvincular Perfil ao Usuário");
         Console.WriteLine("0 - Retornar ao Menu Principal");
         Console.WriteLine();
@@ -24,16 +28,16 @@ public class MenuPaisScreens
         switch (option)
         {
             case 1:
-                ListPaisScreen.Load();
+                ListAcoesScreen.Load();
                 break;
             case 2:
-                CreatePaisScreen.Load();
+                CreateAcoesScreen.Load();
                 break;
             case 3:
-                UpdatePaisScreen.Load();
+                UpdateAcoesScreen.Load();
                 break;
             case 4:
-                DeletePaisScreen.Load();
+                DeleteAcoesScreen.Load();
                 break;
             case 5:
                 Console.WriteLine("opção 5");Console.ReadKey(); Load();

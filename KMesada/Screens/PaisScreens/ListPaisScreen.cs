@@ -23,4 +23,23 @@ public class ListPaisScreen
             Console.WriteLine($"{item.Id} - {item.Nome} - {item.Email} - {item.Celular}");
 
     }
+
+    public static bool consultaId(int id)
+    {
+        var repository = new Repository<Pais>();
+        var user = repository.Get(id);
+        if (user == null)
+            return false;
+        else    
+            return true;
+    }
+
+
+    public static Pais consulta(int id)
+    {
+        var repository = new Repository<Pais>();
+        var pais = repository.Get(id);
+        return pais;
+    }
+
 }
