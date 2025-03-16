@@ -3,6 +3,7 @@ using Dapper;
 using KMesada.Screens.PaisScreens;
 using KMesada.Screens;
 using KMesada.Screens.FilhosScreens;
+using KMesada.Screens.PontuacaoScreens;
 
 
 namespace KMesada;
@@ -57,7 +58,7 @@ class Program
                 MenuAcoesScreen.Load();
                 break;
             case 4:
-                Console.WriteLine("opção 4");Console.ReadKey(); Load();
+                MenuPontuacaoScreen.Load();
                 break;
             case 5:
                 Console.WriteLine("opção 5");Console.ReadKey(); Load();

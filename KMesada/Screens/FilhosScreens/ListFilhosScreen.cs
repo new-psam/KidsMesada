@@ -24,7 +24,7 @@ public class ListFilhosScreen
         {
            var dataNasc = item.Data_nascimento.ToString("dd/MM/yyyy");
            Console.WriteLine($"id: {item.Id} - nome: {item.Nome} - username: {item.UserName} - data nascimento: {dataNasc}"); 
-           Console.WriteLine($"pontos: {item.TotalPontos} - saldo: {item.SaldoDinheiro}; "
+           Console.WriteLine($"pontos: {item.TotalPontos} - saldo: R$ {item.SaldoDinheiro.ToString("F2")}; "
             + $" Pai/Responsael: {ListPaisScreen.consulta(item.IdPais).Nome}\n"); 
         }
     }

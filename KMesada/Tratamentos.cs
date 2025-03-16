@@ -16,5 +16,15 @@ public class Tratamentos
         return valor;
     }
 
+    public static bool pergunta(string pergunta, string respostaAtiva)
+    {
+        var aswer = false;
+        Console.WriteLine(pergunta);
+        var resposta = Console.ReadLine();
+        if (resposta!.Equals(respostaAtiva, StringComparison.OrdinalIgnoreCase))
+            aswer = true;
+        return aswer;
+    }
+
    
 }
