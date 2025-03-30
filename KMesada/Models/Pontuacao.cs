@@ -10,5 +10,5 @@ public class Pontuacao
     public int IdParents { get; set; }
     public int IdFilhos { get; set; }
     public int Pontos {get; set;}
-    public DateTime Data { get; set; }
+    public DateTime? Data { get; set; }
 }

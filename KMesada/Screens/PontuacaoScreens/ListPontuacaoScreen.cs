@@ -24,7 +24,7 @@ public class ListPontuacaoScreen
         var pontos = repository.Get();
         foreach (var item in pontos)
         {
-           var data = item.Data.ToString("dd/MM/yyyy");
+           var data = item.Data?.ToString("dd/MM/yyyy") ?? "Data não informada";
            var kids = ListFilhosScreen.consulta(item.IdFilhos).Nome;
            var parents = ListPaisScreen.consulta(item.IdParents).Nome;
            var action = ListAcoesScreen.consulta(item.IdAcoes).Nome;

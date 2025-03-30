@@ -4,6 +4,7 @@ using KMesada.Screens.PaisScreens;
 using KMesada.Screens;
 using KMesada.Screens.FilhosScreens;
 using KMesada.Screens.PontuacaoScreens;
+using KMesada.Screens.ReportScreens;
 
 
 namespace KMesada;
@@ -61,7 +62,7 @@ class Program
                 MenuPontuacaoScreen.Load();
                 break;
             case 5:
-                Console.WriteLine("opção 5");Console.ReadKey(); Load();
+                MenuReportScreen.Load();
                 break;
             case 6:
                 Console.WriteLine("opção 6");Console.ReadKey(); Load();

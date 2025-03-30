@@ -26,5 +26,7 @@ public class Tratamentos
         return aswer;
     }
 
+    
+
    
 }

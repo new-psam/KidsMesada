@@ -21,7 +21,9 @@ public class CreatePontuacaoScreen
         try
         {
             var repository = new PontuacaoRepository();
-            repository.CreatePontuacao();
+            var retorno = repository.CreatePontuacao();
+            if (retorno == 0)
+                Environment.Exit(0);
             Console.WriteLine("pontos cadastrado com sucesso!!");
         }
         catch (Exception ex)

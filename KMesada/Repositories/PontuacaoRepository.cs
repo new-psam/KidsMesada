@@ -15,8 +15,9 @@ public class PontuacaoRepository : Repository<Pontuacao>
     public int CreatePontuacao()
     {
         var createSql = @"INSERT INTO [Pontuacao]
-                        ([Pontos], [IdAcoes], [IdParents], [IdFilhos])
+                        ([Data], [Pontos], [IdAcoes], [IdParents], [IdFilhos])
                         VALUES(
+                        @data_,
                         @pontos_,
                         @iDacoes_,
                         @idParents_,
@@ -25,6 +26,11 @@ public class PontuacaoRepository : Repository<Pontuacao>
         Console.Clear();
         Console.WriteLine("Cadastrar Pontuação");
         Console.WriteLine("--------------------");
+        // precisa fazer o tratamento da entrada da data (esta aceitando datas futuras)
+        Console.WriteLine("Data do comportamento: mm/dd/yyyy: ");
+        var data = Console.ReadLine()!;
+        if (data == "")
+            data = DateTime.Today.ToString("MM-dd-yyyy");
 
         ListAcoesScreen.List();
         Console.WriteLine("A ação está na listagem? (S/N): ");
@@ -43,11 +49,15 @@ public class PontuacaoRepository : Repository<Pontuacao>
 
         ListFilhosScreen.List();
         Console.WriteLine("Id criança: ");
+
+        // atualização de pontos incluindo pontos diários
+        
         var idFilho = int.Parse(Console.ReadLine()!);
         var idPai = ListFilhosScreen.consulta(idFilho).IdPais;
 
         DataBase.Connection!.Execute(createSql,
         new{
+            data_ = data,
             pontos_ = pontos,
             iDacoes_ = idAcao,
             idParents_  = idPai,
@@ -70,7 +80,7 @@ public class PontuacaoRepository : Repository<Pontuacao>
                             [Id] = @id";
         
         Pontuacao pontuacao = ListPontuacaoScreen.consulta(id_);
-        var data = pontuacao.Data.ToString("MM/dd/yyyy");
+        var data = pontuacao.Data?.ToString("MM/dd/yyyy") ?? "Data não Informada";
 
         Console.Clear();
         Console.WriteLine("Editar cadastro Filho");

@@ -49,7 +49,7 @@ public class DeletePontuacaoScreen
             {
                 Console.WriteLine($"Você tem certeza que quer excluir as informações de: \n");
                 Pontuacao pontuacao = ListPontuacaoScreen.consulta(id);
-                var data = pontuacao.Data.ToString("dd/MM/yyyy");
+                var data = pontuacao.Data?.ToString("dd/MM/yyyy") ?? "Data não informada";
                 var kids = ListFilhosScreen.consulta(pontuacao.IdFilhos).Nome;
                 var parents = ListPaisScreen.consulta(pontuacao.IdParents).Nome;
                 var action = ListAcoesScreen.consulta(pontuacao.IdAcoes).Nome;
