@@ -6,6 +6,7 @@ using KMesada.Screens.FilhosScreens;
 using KMesada.Screens.PaisScreens;
 using KMesada.Screens.PontuacaoScreens;
 using Microsoft.Identity.Client;
+using System.Data;
 using System.Data.Common;
 
 namespace KMesada.Repositories;
@@ -26,11 +27,9 @@ public class PontuacaoRepository : Repository<Pontuacao>
         Console.Clear();
         Console.WriteLine("Cadastrar Pontuação");
         Console.WriteLine("--------------------");
-        // precisa fazer o tratamento da entrada da data (esta aceitando datas futuras)
-        Console.WriteLine("Data do comportamento: mm/dd/yyyy: ");
-        var data = Console.ReadLine()!;
-        if (data == "")
-            data = DateTime.Today.ToString("MM-dd-yyyy");
+        
+
+        var data = Tratamentos.DataPresPast();
 
         ListAcoesScreen.List();
         Console.WriteLine("A ação está na listagem? (S/N): ");
@@ -136,5 +135,12 @@ public class PontuacaoRepository : Repository<Pontuacao>
             
         }
         );
+    }
+
+    public static IEnumerable<Pontuacao> ListaPorData()
+    {
+        string sql = @"SELECT * FROM [Pontuacao] ORDER BY [data]";
+        IEnumerable<Pontuacao> pontos = DataBase.Connection!.Query<Pontuacao>(sql);
+        return pontos;
     }
 }

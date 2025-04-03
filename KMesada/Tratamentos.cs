@@ -26,7 +26,29 @@ public class Tratamentos
         return aswer;
     }
 
-    
+    public static string DataPresPast()
+    {
+        var check = false;
+        string data;
+        do
+        {
+            check = false;
+            Console.WriteLine("Data do comportamento: mm/dd/yyyy: ");
+            data = Console.ReadLine()!;
+            if (data == "")
+                return DateTime.Today.ToString("MM-dd-yyyy");
+
+            DateTime checkFututro = DateTime.Parse(data);
+            if (checkFututro > DateTime.Now)
+            {
+                Console.WriteLine("Erro essa data está no futuro! informe uma data no presente ou no passado");
+                check = true;
+            }
+        }while (check);
+
+        return data;
+            
+    }
 
    
 }

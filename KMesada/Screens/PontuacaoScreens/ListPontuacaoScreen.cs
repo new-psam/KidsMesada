@@ -20,8 +20,9 @@ public class ListPontuacaoScreen
 
     public static void List()
     {
-        var repository = new Repository<Pontuacao>();
-        var pontos = repository.Get();
+        //var repository = new Repository<Pontuacao>();
+        
+        var pontos = PontuacaoRepository.ListaPorData();
         foreach (var item in pontos)
         {
            var data = item.Data?.ToString("dd/MM/yyyy") ?? "Data não informada";
