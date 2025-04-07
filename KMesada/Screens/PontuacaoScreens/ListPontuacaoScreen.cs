@@ -14,13 +14,18 @@ public class ListPontuacaoScreen
         Console.WriteLine("Lista de Pontos");
         Console.WriteLine("----------------------");
         List();
+
+        //Console.WriteLine("----------------------\n");
+        //PontuacaoRepository.AtualizaData(13);
+
+
         Console.ReadKey();
         MenuPontuacaoScreen.Load();
     }
 
     public static void List()
     {
-        //var repository = new Repository<Pontuacao>();
+        
         
         var pontos = PontuacaoRepository.ListaPorData();
         foreach (var item in pontos)

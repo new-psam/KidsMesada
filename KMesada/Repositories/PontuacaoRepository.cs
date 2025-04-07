@@ -31,6 +31,8 @@ public class PontuacaoRepository : Repository<Pontuacao>
 
         var data = Tratamentos.DataPresPast();
 
+        
+
         ListAcoesScreen.List();
         Console.WriteLine("A ação está na listagem? (S/N): ");
         var resposta = Console.ReadLine();
@@ -48,10 +50,12 @@ public class PontuacaoRepository : Repository<Pontuacao>
 
         ListFilhosScreen.List();
         Console.WriteLine("Id criança: ");
-
-        // atualização de pontos incluindo pontos diários
-        
         var idFilho = int.Parse(Console.ReadLine()!);
+        // atualização de pontos incluindo pontos diários
+        AtualizaData(idFilho);
+
+
+        
         var idPai = ListFilhosScreen.consulta(idFilho).IdPais;
 
         DataBase.Connection!.Execute(createSql,
@@ -143,4 +147,111 @@ public class PontuacaoRepository : Repository<Pontuacao>
         IEnumerable<Pontuacao> pontos = DataBase.Connection!.Query<Pontuacao>(sql);
         return pontos;
     }
+
+
+
+//--------------------------------------------------------------
+    public static  int AtualizaData(int _id)
+    {
+        var pontos = ListaPorData();
+        var diarios = pontos.LastOrDefault(x => x.IdAcoes == 1);
+        
+        DateTime data = (DateTime)diarios!.Data!;
+        TimeSpan difDias = DateTime.Today - data;
+        int dias = difDias.Days;
+
+        DateTime novaData = data.AddDays(1);
+        for (int i = 0; i < dias;i++)
+        {
+            try
+            {
+                var createSql = @"INSERT INTO [Pontuacao]
+                            ([Data], [Pontos], [IdAcoes], [IdParents], [IdFilhos])
+                            VALUES(
+                            @data_,
+                            @pontos_,
+                            @iDacoes_,
+                            @idParents_,
+                            @idFilhos_)";
+
+                DataBase.Connection!.Execute(createSql,
+                new{
+                    data_ = novaData.ToString("MM/dd/yyyy"),
+                    pontos_ = 35,
+                    iDacoes_ = 1,
+                    idParents_  = ListFilhosScreen.consulta(_id).IdPais,
+                    idFilhos_ = _id
+                });
+
+                    Console.WriteLine("pontos cadastrado com sucesso!!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Não foi possível realizar o novo cadastro!");
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+                return 0;
+            }
+            novaData = novaData.AddDays(1);
+        }
+        
+        //Console.WriteLine(novaData);
+
+        
+
+
+        return 1;
+    }
 }
+
+
+
+
+
+
+
+//TimeSpan difDias = DateTime.Today - data;
+        // int dias = difDias.Days;
+
+        // for (int i = 0; i < dias; i++)
+        // {
+        //     try
+        //     {
+        //         //var repository = new PontuacaoRepository();
+        //         //var retorno = repository.CreatePontuacao();
+
+        //         var createSql = @"INSERT INTO [Pontuacao]
+        //                     ([Data], [Pontos], [IdAcoes], [IdParents], [IdFilhos])
+        //                     VALUES(
+        //                     @data_,
+        //                     @pontos_,
+        //                     @iDacoes_,
+        //                     @idParents_,
+        //                     @idFilhos_)";
+
+        //     DataBase.Connection!.Execute(createSql,
+        //     new{
+        //         data_ = data,
+        //         pontos_ = 35,
+        //         iDacoes_ = 1,
+        //         idParents_  = ListFilhosScreen.consulta(_id).IdPais,
+        //         idFilhos_ = _id
+        //     });
+
+        //         Console.WriteLine("pontos cadastrado com sucesso!!");
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Console.WriteLine("Não foi possível realizar o novo cadastro!");
+        //         Console.WriteLine(ex.Message);
+        //         Console.ReadKey();
+        //         return 0;
+        //     }
+            
+        // }
+
+        // Console.WriteLine("!!");
+        // Console.WriteLine("!!");
+        // Console.WriteLine($"{dias} dias de  Pontos diários cadastrados com sucesso ");
+        // return 1;
+      
