@@ -140,7 +140,7 @@ public class PontuacaoRepository : Repository<Pontuacao>
         }
         );
     }
-
+// -------------------------------------------------------------
     public static IEnumerable<Pontuacao> ListaPorData()
     {
         string sql = @"SELECT * FROM [Pontuacao] ORDER BY [data]";
@@ -155,10 +155,20 @@ public class PontuacaoRepository : Repository<Pontuacao>
     {
         var pontos = ListaPorData();
         var diarios = pontos.LastOrDefault(x => x.IdAcoes == 1);
+        DateTime data;
+        if (diarios == null)
+            data = DateTime.Today.AddDays(-31);
+        else
+            data = diarios.Data!.Value;
         
-        DateTime data = (DateTime)diarios!.Data!;
         TimeSpan difDias = DateTime.Today - data;
+        
         int dias = difDias.Days;
+        if (dias > 31)
+        {
+            data = DateTime.Today.AddDays(-31);
+            dias = 31;
+        }
 
         DateTime novaData = data.AddDays(1);
         for (int i = 0; i < dias;i++)
