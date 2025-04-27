@@ -154,7 +154,7 @@ public class PontuacaoRepository : Repository<Pontuacao>
     public static  int AtualizaData(int _id)
     {
         var pontos = ListaPorData();
-        var diarios = pontos.LastOrDefault(x => x.IdAcoes == 1);
+        var diarios = pontos.LastOrDefault(x => x.IdAcoes == 1 && x.IdFilhos == _id);
         DateTime data;
         if (diarios == null)
             data = DateTime.Today.AddDays(-31);

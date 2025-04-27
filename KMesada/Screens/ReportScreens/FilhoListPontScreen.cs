@@ -50,10 +50,12 @@ public class FilhoListPontScreen
             -----------------------
             
             ");
+            Console.WriteLine($"{"Data",-12} {"Motivo",-40} {"Pontos",15}");
             foreach (var ponto in k.Pontuacoes)
             {
-                Console.WriteLine($"Data: {ponto.Data?.ToString("dd/MM/yyyy")} - Motivo:  {ListAcoesScreen.consulta(ponto.IdAcoes).Nome} - " 
-                + $"Pontos: {ponto.Pontos}");
+                
+                Console.WriteLine(@$"{ponto.Data?.ToString("dd/MM/yyyy"),-12} " +
+                $"{ListAcoesScreen.consulta(ponto.IdAcoes).Nome,-40} {ponto.Pontos,15}");
             }
         }
     }

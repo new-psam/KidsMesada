@@ -37,7 +37,9 @@ public class FilhoPontRepository
     {
         var query = @$"SELECT [Filhos].*, [Pontuacao].*
                       FROM [Filhos]
-                      LEFT JOIN [Pontuacao] ON [Pontuacao].[IdFIlhos] = {id}";
+                      LEFT JOIN [Pontuacao] ON [Pontuacao].[IdFIlhos] = [filhos].[id]
+                      WHERE [filhos].[Id] = {id}
+                      ORDER BY [pontuacao].[data]";
 
         var kids = new List<Filhos>();
 
