@@ -86,6 +86,13 @@ ADD CONSTRAINT [PK_pontuacao] PRIMARY KEY([Id])
 select * from [Pontuacao]
 GO
 
+select p.[id], p.[data], f.[Nome] as criança, pa.[Nome] as Responsável, a.[Nome], p.[pontos]
+FROM [Pontuacao] p 
+INNER JOIN [Filhos] f ON p.[idFilhos] = f.[Id]
+INNER JOIN [pais] pa ON p.[IdParents] = pa.[Id]
+INNER JOIN [Acoes] a ON p.[IdAcoes] = a.[Id]
+
+select * from [vwPais_Filhos]
 
  /* procedure de insert tabelas pais e filhos  views*/
 create view [vwPais_Filhos] as
@@ -179,7 +186,7 @@ Go
 	[idFilhos] INT NOT NULL,     */
 
 insert into [pontuacao] ([pontos], [IdAcoes], [IdParents], [IdFilhos])
-    values( -2, 1, 1, 7);
+    values( -20, 1, 3, 10);
 
 insert into [pontuacao] ([pontos], [IdAcoes], [IdParents], [IdFilhos])
     values( 100, 2, 1, 7);
@@ -215,7 +222,14 @@ END
 GO
 
 DELETE FROM [Pontuacao] WHERE [Id] = 2
-select * from [Pontuacao]
+
 select * from [vwPais_Filhos]
-select * from [Filhos]
+
 Go
+
+select* from [acoes]
+select * from [pais]
+select * from [Filhos]
+select * from [Pontuacao]
+
+UPDATE [Pontuacao] set [Data] = '03/01/2025' WHERE [Id] = 3;

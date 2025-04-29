@@ -25,9 +25,19 @@ public class FilhoListPontScreen
         var id = Tratamentos.EntradaInt();
         var check = ListFilhosScreen.consultaId(id);
 
+        // falta fazer tratamento adequado para mês e ano
+        Console.WriteLine("mês");
+        var mes = Tratamentos.EntradaInt();
+        if (mes > 12 || mes < 1)
+        {
+            Console.WriteLine("Mês inexistente!");
+            check = false;
+        }
+        var ano = Tratamentos.EntradaInt();
+
         if (check)
         {
-            Relatorio(id);
+            Relatorio(id, mes, ano);
         }
         else
             Console.WriteLine("ERRO !!!!, Id de Criança inexistente!");
@@ -35,10 +45,10 @@ public class FilhoListPontScreen
         MenuReportScreen.Load();
     }
 
-    public static void Relatorio(int id)
+    public static void Relatorio(int id, int mes, int ano)
     {
         var repository = new FilhoPontRepository();
-        var kid = repository.GetWIdPontos(id);
+        var kid = repository.GetWIdPontos(id, mes, ano);
         foreach (var k in kid)
         {
             Console.Clear();
@@ -51,12 +61,24 @@ public class FilhoListPontScreen
             
             ");
             Console.WriteLine($"{"Data",-12} {"Motivo",-40} {"Pontos",15}");
+            int somaPontos = 0;
             foreach (var ponto in k.Pontuacoes)
             {
                 
                 Console.WriteLine(@$"{ponto.Data?.ToString("dd/MM/yyyy"),-12} " +
                 $"{ListAcoesScreen.consulta(ponto.IdAcoes).Nome,-40} {ponto.Pontos,15}");
+                somaPontos += ponto.Pontos;
             }
+
+            Console.WriteLine();
+            Console.WriteLine(@"                        Total Pontos e Dinheiro 
+            
+            -----------------------
+            
+            ");
+            Console.WriteLine($"total de Pontos = {somaPontos}");
+            double TotalMoney = somaPontos * 0.1;
+            Console.WriteLine($"Total Dinheiro  R$  {TotalMoney.ToString("F2")}");
         }
     }
 }

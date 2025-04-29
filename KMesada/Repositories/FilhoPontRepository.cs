@@ -33,12 +33,15 @@ public class FilhoPontRepository
         return kids; 
     }
 
-    public List<Filhos> GetWIdPontos(int id)
+    public List<Filhos> GetWIdPontos(int id, int mes, int ano)
     {
         var query = @$"SELECT [Filhos].*, [Pontuacao].*
                       FROM [Filhos]
-                      LEFT JOIN [Pontuacao] ON [Pontuacao].[IdFIlhos] = [filhos].[id]
-                      WHERE [filhos].[Id] = {id}
+                      LEFT JOIN [Pontuacao] 
+                      ON [Pontuacao].[IdFIlhos] = [filhos].[id]
+                      AND MONTH([pontuacao].[data]) = {mes} 
+                      AND YEAR([pontuacao].[data]) = {ano}
+                      WHERE [filhos].[Id] = {id} 
                       ORDER BY [pontuacao].[data]";
 
         var kids = new List<Filhos>();
