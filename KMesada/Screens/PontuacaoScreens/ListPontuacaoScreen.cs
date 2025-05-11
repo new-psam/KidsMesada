@@ -35,7 +35,8 @@ public class ListPontuacaoScreen
            var parents = ListPaisScreen.consulta(item.IdParents).Nome;
            var action = ListAcoesScreen.consulta(item.IdAcoes).Nome;
            Console.WriteLine($"id: {item.Id} - data: {data} - criança: {kids} - Responsável: {parents}"); 
-           Console.WriteLine($"ocorrido: {action} - pontos: {item.Pontos}\n");  
+           Console.WriteLine($"ocorrido: {action} - pontos: {item.Pontos}");
+           Console.WriteLine($"Observação: {item.Observacao}\n");
         }
     }
 

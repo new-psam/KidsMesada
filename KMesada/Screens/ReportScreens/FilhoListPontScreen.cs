@@ -33,6 +33,7 @@ public class FilhoListPontScreen
             Console.WriteLine("Mês inexistente!");
             check = false;
         }
+        Console.WriteLine("ano(yyyy): ");
         var ano = Tratamentos.EntradaInt();
 
         if (check)

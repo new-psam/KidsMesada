@@ -23,8 +23,9 @@ public class ListFilhosScreen
         foreach (var item in filhos)
         {
            var dataNasc = item.Data_nascimento.ToString("dd/MM/yyyy");
+           var saldo = item.TotalPontos * 0.1;
            Console.WriteLine($"id: {item.Id} - nome: {item.Nome} - username: {item.UserName} - data nascimento: {dataNasc}"); 
-           Console.WriteLine($"pontos: {item.TotalPontos} - saldo: R$ {item.SaldoDinheiro.ToString("F2")}; "
+           Console.WriteLine($"pontos: {item.TotalPontos} - saldo: R$ {saldo.ToString("F2")}; "
             + $" Pai/Responsael: {ListPaisScreen.consulta(item.IdPais).Nome}\n"); 
         }
     }

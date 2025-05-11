@@ -16,13 +16,14 @@ public class PontuacaoRepository : Repository<Pontuacao>
     public int CreatePontuacao()
     {
         var createSql = @"INSERT INTO [Pontuacao]
-                        ([Data], [Pontos], [IdAcoes], [IdParents], [IdFilhos])
+                        ([Data], [Pontos], [IdAcoes], [IdParents], [IdFilhos], [observacao])
                         VALUES(
                         @data_,
                         @pontos_,
                         @iDacoes_,
                         @idParents_,
-                        @idFilhos_)";
+                        @idFilhos_,
+                        @observacao_)";
 
         Console.Clear();
         Console.WriteLine("Cadastrar Pontuação");
@@ -58,13 +59,17 @@ public class PontuacaoRepository : Repository<Pontuacao>
         
         var idPai = ListFilhosScreen.consulta(idFilho).IdPais;
 
+        Console.WriteLine("Observação: ");
+        string observacao = Console.ReadLine()!;
+
         DataBase.Connection!.Execute(createSql,
         new{
             data_ = data,
             pontos_ = pontos,
             iDacoes_ = idAcao,
             idParents_  = idPai,
-            idFilhos_ = idFilho
+            idFilhos_ = idFilho,
+            observacao_ = observacao
         }
         );
         return 1;
@@ -78,7 +83,8 @@ public class PontuacaoRepository : Repository<Pontuacao>
                             [Pontos] = @pontos_,
                             [IdAcoes] = @iDacoes_,
                             [IdParents] = @idParents_,
-                            [idFilhos] = @idFilhos_
+                            [idFilhos] = @idFilhos_,
+                            [observacao] = @observacao_
                         WHERE
                             [Id] = @id";
         
@@ -107,7 +113,7 @@ public class PontuacaoRepository : Repository<Pontuacao>
 
         Console.Clear();
         var iDacoes = pontuacao.IdAcoes;
-        check = Tratamentos.pergunta($"pontos: {ListAcoesScreen.consulta(iDacoes).Nome}  deseja alterar? (S/N): ", "S");
+        check = Tratamentos.pergunta($"ação: {ListAcoesScreen.consulta(iDacoes).Nome}  deseja alterar? (S/N): ", "S");
         if (check) 
         {
             ListAcoesScreen.List();
@@ -117,7 +123,7 @@ public class PontuacaoRepository : Repository<Pontuacao>
 
         Console.Clear();
         var idFilhos = pontuacao.IdFilhos;
-        check = Tratamentos.pergunta($"pontos: {ListFilhosScreen.consulta(idFilhos).Nome}  deseja alterar? (S/N): ", "S");
+        check = Tratamentos.pergunta($"nome da criança: {ListFilhosScreen.consulta(idFilhos).Nome}  deseja alterar? (S/N): ", "S");
         if (check) 
         {
             ListFilhosScreen.List();
@@ -125,6 +131,15 @@ public class PontuacaoRepository : Repository<Pontuacao>
             idFilhos = int.Parse(Console.ReadLine()!);
         }
         var idParents = ListFilhosScreen.consulta(idFilhos).IdPais;
+
+        Console.Clear();
+        var observacao = pontuacao.Observacao;
+        check = Tratamentos.pergunta($"observação: {observacao} \ndeseja alterar? (S/N): ", "S");
+        if (check)
+        {
+            Console.WriteLine("Observação: ");
+            observacao = Console.ReadLine()!;
+        }
 
 
         DataBase.Connection!.Execute(updateSql,
@@ -135,7 +150,8 @@ public class PontuacaoRepository : Repository<Pontuacao>
             idAcoes_  = iDacoes,
             idParents_ = idParents,
             idFilhos_ = idFilhos,
-            id = id_
+            id = id_,
+            observacao_ = observacao
             
         }
         );
