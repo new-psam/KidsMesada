@@ -54,7 +54,7 @@ public class FilhoListPontScreen
         {
             Console.Clear();
             Console.WriteLine($"id:: {k.Id} - nome: {k.Nome} - Pai: {ListPaisScreen.consulta(k.IdPais).Nome}" 
-            + $" - Pontos: {k.TotalPontos} - Saldo {k.SaldoDinheiro}");
+            + $" - Pontos: {k.TotalPontos}");
             Console.WriteLine();
             Console.WriteLine(@"                        Pontuações 
             
@@ -63,12 +63,19 @@ public class FilhoListPontScreen
             ");
             Console.WriteLine($"{"Data",-12} {"Motivo",-40} {"Pontos",15}");
             int somaPontos = 0;
+            int saldo = 0;
             foreach (var ponto in k.Pontuacoes)
             {
+                if (ponto.IdAcoes == 16)
+                {
+                    saldo = ponto.Pontos;
+                }
+                else{
+                    Console.WriteLine(@$"{ponto.Data?.ToString("dd/MM/yyyy"),-12} " +
+                    $"{ListAcoesScreen.consulta(ponto.IdAcoes).Nome,-40} {ponto.Pontos,15}");
+                    somaPontos += ponto.Pontos;
+                }
                 
-                Console.WriteLine(@$"{ponto.Data?.ToString("dd/MM/yyyy"),-12} " +
-                $"{ListAcoesScreen.consulta(ponto.IdAcoes).Nome,-40} {ponto.Pontos,15}");
-                somaPontos += ponto.Pontos;
             }
 
             Console.WriteLine();
@@ -79,7 +86,9 @@ public class FilhoListPontScreen
             ");
             Console.WriteLine($"total de Pontos = {somaPontos}");
             double TotalMoney = somaPontos * 0.1;
+            double TotalSaldo = saldo * 0.1;
             Console.WriteLine($"Total Dinheiro  R$  {TotalMoney.ToString("F2")}");
+            Console.WriteLine($"Saldo Banco  R$  {TotalSaldo.ToString("F2")}");
         }
     }
 }
