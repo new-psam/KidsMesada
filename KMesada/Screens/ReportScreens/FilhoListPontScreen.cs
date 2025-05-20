@@ -53,8 +53,8 @@ public class FilhoListPontScreen
         foreach (var k in kid)
         {
             Console.Clear();
-            Console.WriteLine($"id:: {k.Id} - nome: {k.Nome} - Pai: {ListPaisScreen.consulta(k.IdPais).Nome}" 
-            + $" - Pontos: {k.TotalPontos}");
+            Console.WriteLine($"id: {k.Id} - nome: {k.Nome} - Pai: {ListPaisScreen.consulta(k.IdPais).Nome}"
+            + $" - Idade: {ListFilhosScreen.idade(k.Id)} anos");
             Console.WriteLine();
             Console.WriteLine(@"                        Pontuações 
             
@@ -70,12 +70,13 @@ public class FilhoListPontScreen
                 {
                     saldo = ponto.Pontos;
                 }
-                else{
+                else
+                {
                     Console.WriteLine(@$"{ponto.Data?.ToString("dd/MM/yyyy"),-12} " +
                     $"{ListAcoesScreen.consulta(ponto.IdAcoes).Nome,-40} {ponto.Pontos,15}");
                     somaPontos += ponto.Pontos;
                 }
-                
+
             }
 
             Console.WriteLine();
@@ -89,6 +90,18 @@ public class FilhoListPontScreen
             double TotalSaldo = saldo * 0.1;
             Console.WriteLine($"Total Dinheiro  R$  {TotalMoney.ToString("F2")}");
             Console.WriteLine($"Saldo Banco  R$  {TotalSaldo.ToString("F2")}");
+
+            Console.WriteLine();
+            Console.WriteLine(@"                        Meses de Retiradas -> 20% do saldo Dineheiro limitado a R$ 400,00 
+            
+            -----------------------
+            
+            ");
+            Console.WriteLine($"{"Mês",-12} {"Valor",-20} {"Gasto",15} {"Sobra + 10%",25}");
+            Console.WriteLine("______________________________________________________________________________________________________");
+            Console.WriteLine($"{"março",-12} {"R$ 400,00",-20} {"R$ 300,00",15} {"R$ 110,00",25}");
+            Console.WriteLine($"{"julho",-12} {"R$ 400,00",-20} {"R$ 300,00",15} {"R$ 110,00",25}");
+            Console.WriteLine($"{"novembro",-12} {"R$ 400,00",-20} {"R$ 300,00",15} {"R$ 110,00", 25}");
         }
     }
 }
